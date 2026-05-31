@@ -1,0 +1,8 @@
+# local-platform-infra/helm-values/argocd-values.yaml
+# Minimal configuration to get ArgoCD running efficiently without 
+# rigid production SSL setups locally.
+server:
+  extraArgs:
+    - --insecure # Disables SSL on the internal container level for easier local ingress routing
+  metrics:
+    enabled: true
