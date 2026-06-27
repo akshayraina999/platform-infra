@@ -1,0 +1,36 @@
+# platform-infra/helm-values/sonarqube-values.yaml
+
+monitoringPasscode: "localPlatformHealthCheckPasscode123"
+
+community:
+  enabled: true
+
+# CORRECT UPSTREAM FIELD PATHING FOR TARGETING POSTGRESQL
+postgresql:
+  enabled: true
+  auth:
+    database: "sonar"
+    username: "sonar"
+    password: "sonarSecurePassword123"
+  postgresqlDataDir: /var/lib/postgresql/data/pgdata
+  persistence:
+    enabled: false
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "300m"
+      memory: "512Mi"
+
+# Turn off heavy block storage rules for the core engine
+persistence:
+  enabled: false
+
+resources:
+  requests:
+    cpu: "200m"
+    memory: "1.5Gi"
+  limits:
+    cpu: "800m"
+    memory: "2Gi"

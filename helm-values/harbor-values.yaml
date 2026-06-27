@@ -1,0 +1,30 @@
+# platform-infra/helm-values/harbor-values.yaml
+
+expose:
+  type: ingress
+  ingress:
+    hosts:
+      core: harbor.local
+    className: nginx
+    annotations:
+      ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+externalURL: http://harbor.local
+
+# For local development purposes, we will disable multi-replica high availability
+portal:
+  replicaCount: 1
+core:
+  replicaCount: 1
+jobservice:
+  replicaCount: 1
+registry:
+  replicaCount: 1
+
+# Disabling persistence keeps the setup fast and lightweight on a local Mac SSD
+persistence:
+  enabled: false
+
+trivy:
+  enabled: true # Automatically provides vulnerability scanning for your DevSecOps demonstration

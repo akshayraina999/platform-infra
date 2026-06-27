@@ -1,0 +1,35 @@
+# platform-infra/helm-values/jenkins-values.yaml
+controller:
+  componentName: "jenkins-controller"
+  
+  # CORRECTED IMAGE STRUCTURAL SYNTAX BLOCK:
+  image:
+    registry: "docker.io"
+    repository: "jenkins/jenkins"
+    tag: "lts"
+  
+  # Expose Jenkins locally via an Ingress path mapping
+  ingress:
+    enabled: true
+    apiVersion: "networking.k8s.io/v1"
+    ingressClassName: "nginx"
+    hostName: "jenkins.local"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+
+  # We use a standard ClusterIP because our port-forwarding handles the traffic hook
+  serviceType: "ClusterIP"
+  
+  # Allocate lightweight local resources to stay gentle on your Mac's RAM
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1024Mi"
+
+# Turn off heavy persistence agents for speed on your local drive
+persistence:
+  enabled: false
